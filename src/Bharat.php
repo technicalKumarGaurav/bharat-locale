@@ -5,6 +5,7 @@ namespace Technicalkumargaurav\BharatLocale;
 use Technicalkumargaurav\BharatLocale\Currency\CurrencyFormatter;
 use Technicalkumargaurav\BharatLocale\Number\NumberFormatter;
 use Technicalkumargaurav\BharatLocale\Masking\MaskFormatter;
+use Technicalkumargaurav\BharatLocale\Words\EnglishWords;
 
 class Bharat
 {
@@ -43,5 +44,41 @@ class Bharat
     public static function maskEmail(string $email): string
     {
         return MaskFormatter::email($email);
+    }
+
+    public static function amountInWords(
+        int|float|string $amount,
+        string $language = 'en'
+    ): string {
+        $amount = (int) $amount;
+
+        return EnglishWords::convert($amount);
+    }
+
+    public static function currencyToWords(
+        int|float|string $amount
+    ): string {
+        $amount = (float) $amount;
+
+        $rupees = (int) $amount;
+        $paise = (int) round(($amount - $rupees) * 100);
+
+        $rupeeLabel = $rupees === 1 ? 'Rupee' : 'Rupees';
+        $paisaLabel = $paise === 1 ? 'Paisa' : 'Paise';
+
+        if ($rupees === 0 && $paise > 0) {
+            return EnglishWords::convert($paise) . ' ' . $paisaLabel;
+        }
+
+        $result = EnglishWords::convert($rupees) . ' ' . $rupeeLabel;
+
+        if ($paise > 0) {
+            $result .= ' and '
+                . EnglishWords::convert($paise)
+                . ' '
+                . $paisaLabel;
+        }
+
+        return $result;
     }
 }
