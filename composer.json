@@ -1,0 +1,18 @@
+{
+    "name": "technicalkumargaurav/bharat-locale",
+    "description": "Indian localization toolkit for PHP applications.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Technicalkumargaurav\\BharatLocale\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kumar Gaurav"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
