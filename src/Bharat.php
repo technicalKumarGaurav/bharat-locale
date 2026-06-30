@@ -6,6 +6,7 @@ use Technicalkumargaurav\BharatLocale\Currency\CurrencyFormatter;
 use Technicalkumargaurav\BharatLocale\Number\NumberFormatter;
 use Technicalkumargaurav\BharatLocale\Masking\MaskFormatter;
 use Technicalkumargaurav\BharatLocale\Words\EnglishWords;
+use Technicalkumargaurav\BharatLocale\Words\HindiWords;
 
 class Bharat
 {
@@ -52,7 +53,10 @@ class Bharat
     ): string {
         $amount = (int) $amount;
 
-        return EnglishWords::convert($amount);
+        return match (strtolower($language)) {
+            'hi', 'hindi' => HindiWords::convert($amount),
+            default => EnglishWords::convert($amount),
+        };
     }
 
     public static function currencyToWords(
